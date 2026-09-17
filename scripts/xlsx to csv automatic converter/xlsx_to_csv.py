@@ -12,8 +12,10 @@ If --dst is omitted, CSVs are written alongside the source files.
 Notes:
 - Only the FIRST sheet of each workbook is exported by default (use
   --all-sheets to export every sheet as its own CSV: <file>__<sheet>.csv).
-- Dates are written in ISO format (YYYY-MM-DD) so they match what your
+  
+- Dates are written in ISO format (YYYY-MM-DD) so they match what
   BULK INSERT / bronze DATE columns expect.
+  
 - Output is UTF-8 with a comma delimiter, matching FIELDTERMINATOR = ','
   and no header skipping surprises (FIRSTROW = 2 still applies since the
   header row is kept).
@@ -26,8 +28,7 @@ from pathlib import Path
 
 
 def ensure_dependencies():
-    """Install pandas/openpyxl automatically if they're missing, so this
-    script runs standalone on a fresh machine without a manual pip step."""
+    """Install pandas/openpyxl automatically if they're missing."""
     required = {"pandas": "pandas", "openpyxl": "openpyxl"}
     missing = []
     for module_name, pip_name in required.items():
