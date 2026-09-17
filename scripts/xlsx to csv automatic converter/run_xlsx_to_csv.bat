@@ -2,7 +2,7 @@
 REM ============================================================
 REM  run_xlsx_to_csv.bat
 REM  Double-click wrapper for xlsx_to_csv.py on Windows.
-REM  Edit the SRC and DST paths below to match your project.
+REM  Edit the SRC and DST paths below to match the project path on your PC.
 REM ============================================================
 
 set SRC=C:\Users\Mohamed Ahmed Rashed\sql_data_warehouse_business_analytics\datasets\source_xlsx
