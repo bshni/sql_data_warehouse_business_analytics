@@ -23,15 +23,14 @@ GO
 
 CREATE VIEW gold.dim_customers AS
 SELECT
-    ROW_NUMBER() OVER (ORDER BY customer_id) AS customer_key, -- Surrogate key
-    customer_id,
+    customer_id AS customer_key,
     segment,
     customer_name,
     country,
     state,
     city,
     postal_code
-FROM silver.csv_central_superstore ci
+FROM silver.csv_central_superstore
 GO
 -- quick check: SELECT TOP 10 * FROM gold.dim_customers;
 
@@ -44,8 +43,7 @@ GO
 
 CREATE VIEW gold.dim_products AS
 SELECT
-    ROW_NUMBER() OVER (ORDER BY product_id) AS product_key, -- Surrogate key
-    product_id       AS product_id,
+    product_id       AS product_key,
     product_name     AS product_name,
     category        AS category,
     sub_category     AS sub_category
@@ -62,8 +60,7 @@ GO
 
 CREATE VIEW gold.dim_order_details AS
 SELECT
-    ROW_NUMBER() OVER (ORDER BY order_id, order_date) AS order_details_key, -- Surrogate key
-    order_id,
+    order_id AS order_details_key,
     order_date,
     ship_date,
     ship_mode     
@@ -97,11 +94,11 @@ SELECT
     od.order_details_key
 FROM silver.csv_central_superstore sd
 LEFT JOIN gold.dim_products pr
-    ON sd.product_id = pr.product_id
+    ON sd.product_id = pr.product_key
 LEFT JOIN gold.dim_customers cu
-    ON sd.customer_id = cu.customer_id
+    ON sd.customer_id = cu.customer_key
 LEFT JOIN gold.dim_order_details od
-    ON sd.order_id = od.order_id;
+    ON sd.order_id = od.order_details_key;
 GO
 
 -- quick check: SELECT TOP 10 * FROM gold.fact_sales;
